@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Battesimo di Michele Pio</title>
-<meta property="og:type" content="website"><meta property="og:title" content="Battesimo di Michele Pio"><meta property="og:description" content="Domenica 27 dicembre 2026, ore 10:00 · Tocca per confermare la vostra presenza"><meta property="og:image" content="https://pierpaolopiscone.github.io/invito-mp/invito.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="720"><meta property="og:image:height" content="1280">
+<meta property="og:type" content="website"><meta property="og:title" content="Battesimo di Michele Pio"><meta property="og:description" content="Domenica 27 dicembre 2026, ore 10:00 · Parrocchia Santissima Trinità, Manfredonia"><meta property="og:image" content="https://pierpaolopiscone.github.io/invito-mp/invito.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="720"><meta property="og:image:height" content="1280">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Great+Vibes&family=Nunito+Sans:wght@400;700&display=swap">
 <style>
 :root{--bg:#FBF6EC;--card:#FFFDF8;--ink:#2C3F36;--soft:#6A7D72;--line:#E7DDC9;--euc:#557A66;--sage:#DDE7DF;--holly:#A2443C;--hollys:#F5E1DC;--gold:#A9864B}
@@ -8,6 +8,18 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Nunito Sans",
 .wrap{max-width:460px;margin:0 auto;padding:18px 16px 48px}
 .inv{display:block;width:100%;border-radius:18px;box-shadow:0 18px 38px -18px rgba(60,40,20,.5),0 0 0 1px var(--line);background:#fff}
 .inv.small{width:62%;margin:0 auto}
+h1,h2,p,label,.btn{text-wrap:pretty}
+.nw{white-space:nowrap}
+.inv{cursor:zoom-in}
+.hint{display:block;text-align:center;font-size:13px;color:var(--soft);margin-top:8px}
+.nome{display:block;font:400 46px/1.25 "Great Vibes",cursive;color:var(--euc);text-align:center;white-space:nowrap;margin:10px 0 16px}
+.card h2+p{margin-top:10px}
+.lead{margin:4px 0 0;text-align:center}
+#zoom{position:fixed;inset:0;z-index:50;background:rgba(20,26,22,.94);display:none;touch-action:none;overflow:hidden}
+#zoom.on{display:block}
+#zoom img{position:absolute;left:50%;top:50%;max-width:100vw;max-height:100vh;transform-origin:0 0;user-select:none;-webkit-user-drag:none}
+#zoom .x{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;z-index:2;min-width:48px;min-height:48px;padding:0 16px;border-radius:999px;border:0;background:rgba(255,255,255,.92);color:var(--ink);font:700 16px "Nunito Sans",sans-serif;cursor:pointer}
+#zoom .tip{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#fff;opacity:.75;font-size:14px}
 h1{font:600 30px/1.1 "Cormorant Garamond",serif;margin:18px 0 6px;text-align:center}
 h2{font:600 24px/1.15 "Cormorant Garamond",serif;margin:0 0 6px}
 .script{font:400 40px/1 "Great Vibes",cursive;color:var(--euc)}
@@ -46,7 +58,7 @@ var E={codice:'entry.407281430',da:'entry.2050955296',dati:'entry.1296441758'};
 var P=new URLSearchParams(location.search),C=P.get('c'),F=P.get('f'),T=P.get('t')==='1';
 var app=document.getElementById('app');
 var D=null,me=null,draft={};
-var TXT='Siamo felici di invitarvi al Battesimo di Michele Pio, domenica 27 dicembre 2026 alle 10:00 nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia). Dopo la cerimonia festeggeremo insieme da Manfredi Ricevimenti (S.P. 58, km 12 – Manfredonia). Vi chiediamo gentilmente di confermare entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
+var TXT='Ciao! Domenica 27 dicembre 2026 alle 10:00 battezziamo Michele Pio nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia). Dopo la cerimonia festeggiamo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Ci farebbe tanto piacere avervi con noi: fateci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function nome(n){return String(n).replace(/^Zi[oa] /,'')}
 function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
@@ -70,13 +82,13 @@ function localAl(id){return load('mp-al-'+C+'-'+id)||''}
 function salvaFam(dati,cb){
   var body=new URLSearchParams();body.append(E.codice,C);body.append(E.da,me);body.append(E.dati,JSON.stringify(dati));
   fetch(FORM,{method:'POST',mode:'no-cors',body:body}).then(function(){
-    dati.forEach(function(x){var m=byId(x.id);if(!m)return;m.stato=x.stato;m.da=me;if(x.allergie!=null&&x.allergie!==''){var al=/^nessun/i.test(x.allergie)?'':x.allergie;m.allergie=al;store('mp-al-'+C+'-'+x.id,al)}if(x.stato==='no'){m.allergie='';store('mp-al-'+C+'-'+x.id,null)}});
+    dati.forEach(function(x){var m=byId(x.id);if(!m)return;m.stato=x.stato;m.da=x.stato==='attesa'?'':byId(me).nome;if(x.allergie!=null&&x.allergie!==''){var al=/^nessun/i.test(x.allergie)?'':x.allergie;m.allergie=al;store('mp-al-'+C+'-'+x.id,al)}if(x.stato==='no'){m.allergie='';store('mp-al-'+C+'-'+x.id,null)}});
     store('mp-agg-'+C,JSON.stringify(D.membri.map(function(m){return[m.id,m.stato]})));
     cb({ok:true});
   }).catch(function(){cb({ok:false})});
 }
-var INFO='<div class="card info"><h2>Il giorno</h2><p><b>Domenica 27 dicembre 2026, ore 10:00</b></p><p>Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia · <a href="https://waze.com/ul?q='+encodeURIComponent('Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia')+'&navigate=yes">Waze</a> · <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia')+'">Maps</a></p><p>Pranzo da Manfredi Ricevimenti, S.P. 58 km 12, Manfredonia · <a href="https://waze.com/ul?q='+encodeURIComponent('Manfredi Ricevimenti, Manfredonia')+'&navigate=yes">Waze</a> · <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Manfredi Ricevimenti, Manfredonia')+'">Maps</a></p></div>';
-function shell(inner,small){app.innerHTML='<img class="inv'+(small?' small':'')+'" src="invito.jpg" alt="Invito al battesimo di Michele Pio">'+inner}
+var INFO='<div class="card info"><h2>Il giorno</h2><p><b><span class="nw">Domenica 27 dicembre 2026</span>, <span class="nw">ore 10:00</span></b></p><p><b>Cerimonia</b><br>Parrocchia Santissima Trinità<br>Via Dante Alighieri, Manfredonia<br><a href="https://waze.com/ul?q='+encodeURIComponent('Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia')+'&navigate=yes">Waze</a> &nbsp;·&nbsp; <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia')+'">Maps</a></p><p><b>Pranzo</b><br>Manfredi Ricevimenti<br>S.P. 58, km 12, Manfredonia<br><a href="https://waze.com/ul?q='+encodeURIComponent('Manfredi Ricevimenti, Manfredonia')+'&navigate=yes">Waze</a> &nbsp;·&nbsp; <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Manfredi Ricevimenti, Manfredonia')+'">Maps</a></p></div>';
+function shell(inner,small){app.innerHTML='<img class="inv'+(small?' small':'')+'" src="invito.jpg" alt="Invito al battesimo di Michele Pio" role="button" tabindex="0"><span class="hint">Tocca l\'invito per vederlo grande</span>'+inner}
 function stLab(s,eta){return s==='si'?'Ci sarà':s==='no'?'Non ci sarà':'Non ha ancora risposto'}
 function byId(id){for(var i=0;i<D.membri.length;i++)if(D.membri[i].id===id)return D.membri[i];return null}
 
@@ -107,21 +119,22 @@ function start(){
   });
 }
 function chi(){
-  shell('<div class="card"><h2>Ciao!</h2><p>Siamo felici di invitarvi al battesimo di <span class="script">Michele Pio</span>.</p><p><b>Chi sei?</b></p><div class="who">'+D.membri.map(function(m){return '<button class="btn" data-id="'+esc(m.id)+'">'+esc(m.nome)+'</button>'}).join('')+'</div></div>'+INFO,true);
+  shell('<div class="card"><h2 class="center">Ciao!</h2><p class="lead">Vi aspettiamo al battesimo di</p><span class="nome">Michele Pio</span><p><b>Chi sei?</b> Tocca il tuo nome.</p><div class="who">'+D.membri.map(function(m){return '<button class="btn" data-id="'+esc(m.id)+'">'+esc(m.nome)+'</button>'}).join('')+'</div></div>'+INFO,true);
   app.querySelectorAll('[data-id]').forEach(function(b){b.onclick=function(){me=b.getAttribute('data-id');store(KEY,me);var m=byId(me);if(m.stato==='attesa')domanda();else riepilogo()}});
 }
 function domanda(){
   var m=byId(me);draft={};
-  shell('<div class="card center"><h2>Ciao '+esc(nome(m.nome))+'!</h2><p>Ci sarai al battesimo di <span class="script">Michele Pio</span>?</p><p class="soft">Domenica 27 dicembre, ore 10:00</p><button class="btn primary" id="si">Sì, ci sarò</button><button class="btn no" id="no">No, purtroppo non posso</button>'+(D.membri.length>1?'<button class="btn link" id="altro">Non sono '+esc(nome(m.nome))+'</button>':'')+'</div>'+INFO,true);
+  shell('<div class="card center"><h2>Ciao '+esc(nome(m.nome))+'!</h2><p class="lead">Ci sarai al battesimo di</p><span class="nome">Michele Pio</span><p class="soft"><span class="nw">Domenica 27 dicembre</span>, <span class="nw">ore 10:00</span></p><button class="btn primary" id="si">Sì, ci sarò</button><button class="btn no" id="no">No, purtroppo non posso</button>'+(D.membri.length>1?'<button class="btn link" id="altro">Non sono '+esc(nome(m.nome))+'</button>':'')+'</div>'+INFO,true);
   document.getElementById('si').onclick=function(){draft[me]='si';altri()};
   document.getElementById('no').onclick=function(){draft[me]='no';altri()};
   var a=document.getElementById('altro');if(a)a.onclick=function(){store(KEY,null);me=null;chi()};
 }
+function perAltri(){return D.membri.filter(function(x){return x.id!==me&&(x.stato==='attesa'||!x.da||x.da!==x.nome)})}
 function altri(onlyOthers){
-  var lista=D.membri.filter(function(x){return x.id!==me&&x.stato==='attesa'&&!(x.id in draft)});
+  var lista=perAltri().filter(function(x){return !(x.id in draft)});
   if(!lista.length)return allergie();
-  var sel={};lista.forEach(function(x){sel[x.id]=draft[me]||'si'});
-  shell('<div class="card"><h2>'+(onlyOthers?'Rispondi per chi manca':'Rispondi anche per loro?')+'</h2><p class="soft">Non hanno ancora risposto. Se non lo sai, scegli “Risponde da sé”.</p>'+lista.map(function(x){return '<div class="person"><label>'+esc(x.nome)+'</label><div class="seg" data-p="'+esc(x.id)+'"><button data-v="si" aria-pressed="'+(sel[x.id]==='si')+'">Ci sarà</button><button class="no" data-v="no" aria-pressed="'+(sel[x.id]==='no')+'">Non ci sarà</button><button data-v="" aria-pressed="false">Risponde da sé</button></div></div>'}).join('')+'<button class="btn primary" id="go">Avanti</button></div>',true);
+  var sel={};lista.forEach(function(x){sel[x.id]=x.stato==='attesa'?(draft[me]||'si'):x.stato});
+  shell('<div class="card"><h2>'+(onlyOthers?'Rispondi per gli altri':'Rispondi anche per loro?')+'</h2><p class="soft">Puoi rispondere per chi non l’ha ancora fatto, o cambiare una risposta data da qualcun altro. Se non lo sai, scegli “Risponde da sé”.</p>'+lista.map(function(x){var gia=x.stato!=='attesa';return '<div class="person"><label>'+esc(x.nome)+'</label>'+(gia?'<p class="soft" style="margin-top:-2px">'+(x.da?'Ha risposto '+esc(nome(x.da))+': ':'')+(x.stato==='si'?'ci sarà':'non ci sarà')+'</p>':'')+'<div class="seg" data-p="'+esc(x.id)+'"><button data-v="si" aria-pressed="'+(sel[x.id]==='si')+'">Ci sarà</button><button class="no" data-v="no" aria-pressed="'+(sel[x.id]==='no')+'">Non ci sarà</button><button data-v="'+(gia?'attesa':'')+'" aria-pressed="false">Risponde da sé</button></div></div>'}).join('')+'<button class="btn primary" id="go">Avanti</button></div>',true);
   app.querySelectorAll('[data-p]').forEach(function(s){s.querySelectorAll('button').forEach(function(b){b.onclick=function(){s.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});sel[s.getAttribute('data-p')]=b.getAttribute('data-v')}})});
   document.getElementById('go').onclick=function(){lista.forEach(function(x){if(sel[x.id])draft[x.id]=sel[x.id]});allergie()};
 }
@@ -143,17 +156,47 @@ function invia(al){
   });
 }
 function riepilogo(appena){
-  var m=byId(me),mancano=D.membri.filter(function(x){return x.stato==='attesa'}).length,vengono=D.membri.some(function(x){return x.stato==='si'});
+  var m=byId(me),mancano=perAltri().length,vengono=D.membri.some(function(x){return x.stato==='si'});
   var tit=m.stato==='si'?'Grazie '+esc(nome(m.nome))+', ti aspettiamo!':m.stato==='no'?'Grazie per averci fatto sapere, '+esc(nome(m.nome))+'.':'Ciao '+esc(nome(m.nome))+'!';
   shell('<div class="card"><h2>'+tit+'</h2>'+(appena?'<p class="soft">La risposta è arrivata a Pierpaolo e Mariassunta.</p>':'<p class="soft">Ecco le risposte della vostra famiglia.</p>')+
   D.membri.map(function(x){return '<div class="row"><span class="n">'+esc(x.nome)+(x.allergie&&x.stato==='si'?'<br><span class="al">'+esc(x.allergie)+'</span>':'')+'</span><span class="st '+esc(x.stato)+'">'+stLab(x.stato)+'</span></div>'}).join('')+
-  '<button class="btn primary" id="mod">Cambia la mia risposta</button>'+(vengono?'<button class="btn" id="al">Allergie e intolleranze</button>':'')+(mancano?'<button class="btn" id="alt">Rispondi per chi manca</button>':'')+(D.membri.length>1?'<button class="btn link" id="chi">Non sono '+esc(nome(m.nome))+'</button>':'')+'</div>'+INFO,true);
-  document.getElementById('mod').onclick=function(){draft={};var mm=byId(me);shell('<div class="card center"><h2>Cambia risposta</h2><p>Ci sarai al battesimo?</p><button class="btn primary" id="si">Sì, ci sarò</button><button class="btn no" id="no">No, non posso</button><button class="btn link" id="ann">Annulla</button></div>',true);
-    document.getElementById('si').onclick=function(){draft[me]='si';allergie()};document.getElementById('no').onclick=function(){draft[me]='no';invia({})};document.getElementById('ann').onclick=function(){riepilogo()}};
+  '<button class="btn primary" id="mod">Cambia la mia risposta</button>'+(vengono?'<button class="btn" id="al">Allergie e intolleranze</button>':'')+(mancano?'<button class="btn" id="alt">Rispondi per gli altri</button>':'')+(D.membri.length>1?'<button class="btn link" id="chi">Non sono '+esc(nome(m.nome))+'</button>':'')+'</div>'+INFO,true);
+  document.getElementById('mod').onclick=function(){draft={};var mm=byId(me);shell('<div class="card center"><h2>Cambia risposta</h2><p>Ci sarai al battesimo di <span class="nw">Michele Pio</span>?</p><button class="btn primary" id="si">Sì, ci sarò</button><button class="btn no" id="no">No, non posso</button><button class="btn link" id="ann">Annulla</button></div>',true);
+    document.getElementById('si').onclick=function(){draft[me]='si';altri()};document.getElementById('no').onclick=function(){draft[me]='no';altri()};document.getElementById('ann').onclick=function(){riepilogo()}};
   var b=document.getElementById('al');if(b)b.onclick=function(){draft={};allergie(true)};
   b=document.getElementById('alt');if(b)b.onclick=function(){draft={};altri(true)};
   b=document.getElementById('chi');if(b)b.onclick=function(){store(KEY,null);me=null;chi()};
 }
+/* ---- invito a schermo intero, con zoom ---- */
+var Z=document.createElement('div');Z.id='zoom';Z.setAttribute('role','dialog');Z.setAttribute('aria-label','Invito a schermo intero');
+Z.innerHTML='<button class="x" type="button">Chiudi ✕</button><img src="invito.jpg" alt="Invito al battesimo di Michele Pio"><p class="tip">Allarga con due dita per ingrandire</p>';
+document.body.appendChild(Z);
+var zi=Z.querySelector('img'),zs=1,zx=0,zy=0,w0=0,h0=0,pts={},g0=null,lastTap=0;
+function fit(){var vw=innerWidth,vh=innerHeight,r=Math.min(vw/720,vh/1280);w0=720*r;h0=1280*r;zi.style.width=w0+'px';zi.style.height=h0+'px';zi.style.left='0';zi.style.top='0';zi.style.maxWidth='none';zi.style.maxHeight='none'}
+function clamp(){var vw=innerWidth,vh=innerHeight,w=w0*zs,h=h0*zs;
+  zx=w<=vw?(vw-w)/2:Math.min(0,Math.max(vw-w,zx));zy=h<=vh?(vh-h)/2:Math.min(0,Math.max(vh-h,zy))}
+function draw(){clamp();zi.style.transform='translate('+zx+'px,'+zy+'px) scale('+zs+')'}
+function zoomAt(ns,cx,cy){ns=Math.max(1,Math.min(5,ns));var px=(cx-zx)/zs,py=(cy-zy)/zs;zs=ns;zx=cx-px*zs;zy=cy-py*zs;draw()}
+function apri(){fit();zs=1;zx=0;zy=0;draw();Z.classList.add('on');document.body.style.overflow='hidden';try{history.pushState({zoom:1},'')}catch(e){}}
+function chiudi(fromPop){if(!Z.classList.contains('on'))return;Z.classList.remove('on');document.body.style.overflow='';if(!fromPop){try{if(history.state&&history.state.zoom)history.back()}catch(e){}}}
+Z.querySelector('.x').onclick=function(){chiudi()};
+addEventListener('popstate',function(){chiudi(true)});
+addEventListener('keydown',function(e){if(e.key==='Escape')chiudi()});
+addEventListener('resize',function(){if(Z.classList.contains('on')){fit();draw()}});
+app.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('inv'))apri()});
+app.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('inv')){e.preventDefault();apri()}});
+function info(){var k=Object.keys(pts),a=pts[k[0]],b=pts[k[1]];return b?{d:Math.hypot(a.x-b.x,a.y-b.y),x:(a.x+b.x)/2,y:(a.y+b.y)/2}:{d:0,x:a.x,y:a.y}}
+Z.addEventListener('pointerdown',function(e){if(e.target.classList.contains('x'))return;Z.setPointerCapture&&Z.setPointerCapture(e.pointerId);pts[e.pointerId]={x:e.clientX,y:e.clientY};g0={i:info(),s:zs,x:zx,y:zy,n:Object.keys(pts).length,moved:false}});
+Z.addEventListener('pointermove',function(e){if(!pts[e.pointerId]||!g0)return;pts[e.pointerId]={x:e.clientX,y:e.clientY};var n=Object.keys(pts).length;
+  if(n!==g0.n){g0={i:info(),s:zs,x:zx,y:zy,n:n,moved:true};return}
+  var c=info();if(Math.abs(c.x-g0.i.x)+Math.abs(c.y-g0.i.y)>6)g0.moved=true;
+  if(n>=2&&g0.i.d>0){var ns=Math.max(1,Math.min(5,g0.s*c.d/g0.i.d)),px=(g0.i.x-g0.x)/g0.s,py=(g0.i.y-g0.y)/g0.s;zs=ns;zx=c.x-px*zs;zy=c.y-py*zs;draw()}
+  else if(n===1&&zs>1){zx=g0.x+(c.x-g0.i.x);zy=g0.y+(c.y-g0.i.y);draw()}});
+function up(e){if(!pts[e.pointerId])return;delete pts[e.pointerId];var n=Object.keys(pts).length;
+  if(!n&&g0&&!g0.moved&&g0.n===1){var now=Date.now();if(now-lastTap<320){zoomAt(zs>1.2?1:2.5,e.clientX,e.clientY);lastTap=0}else{lastTap=now;if(zs===1&&e.target===Z){setTimeout(function(){if(lastTap===now&&zs===1)chiudi()},330)}}}
+  g0=n?{i:info(),s:zs,x:zx,y:zy,n:n,moved:true}:null}
+Z.addEventListener('pointerup',up);Z.addEventListener('pointercancel',up);
+Z.addEventListener('wheel',function(e){e.preventDefault();zoomAt(zs*(e.deltaY<0?1.15:1/1.15),e.clientX,e.clientY)},{passive:false});
 if(C)start();else fotoMode();
 })();
 </script></body></html>
