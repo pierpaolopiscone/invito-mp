@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Battesimo di Michele Pio</title>
-<meta property="og:type" content="website"><meta property="og:title" content="Battesimo di Michele Pio"><meta property="og:description" content="Domenica 27 dicembre 2026, ore 10:00 · Parrocchia Santissima Trinità, Manfredonia"><meta property="og:image" content="https://pierpaolopiscone.github.io/invito-mp/invito.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="720"><meta property="og:image:height" content="1280">
+<meta property="og:type" content="website"><meta property="og:title" content="Battesimo di Michele Pio"><meta property="og:description" content="Domenica 27 dicembre 2026, ore 10:00 · Parrocchia Santissima Trinità, Manfredonia"><meta property="og:image" content="https://pierpaolopiscone.github.io/invito-mp/invito.jpg?v=2"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="720"><meta property="og:image:height" content="1280">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Great+Vibes&family=Nunito+Sans:wght@400;700&display=swap">
 <style>
 :root{--bg:#FBF6EC;--card:#FFFDF8;--ink:#2C3F36;--soft:#6A7D72;--line:#E7DDC9;--euc:#557A66;--sage:#DDE7DF;--holly:#A2443C;--hollys:#F5E1DC;--gold:#A9864B}
@@ -55,7 +55,7 @@ input[type=text]{width:100%;min-height:50px;border:1px solid var(--line);border-
 .center{text-align:center}
 .err{color:var(--holly);font-weight:700}
 .spin{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--euc);border-radius:50%;margin:24px auto;animation:s 1s linear infinite}@keyframes s{to{transform:rotate(1turn)}}
-</style></head><body><div class="wrap" id="app"><img class="inv" src="invito.jpg" alt="Invito al battesimo di Michele Pio"><div class="spin"></div></div>
+</style></head><body><div class="wrap" id="app"><img class="inv" src="invito.jpg?v=2" alt="Invito al battesimo di Michele Pio"><div class="spin"></div></div>
 <script>
 (function(){
 var PUB='1bNxxb7UrNCLNHh3C4x57mI7bjHuQpoA5ooB--US5wmk';
@@ -64,7 +64,7 @@ var E={codice:'entry.407281430',da:'entry.2050955296',dati:'entry.1296441758'};
 var P=new URLSearchParams(location.search),C=P.get('c'),F=P.get('f'),T=P.get('t')==='1';
 var app=document.getElementById('app');
 var D=null,me=null,draft={};
-var TXT='Abbiamo una bella notizia da condividere con te 💙 Domenica 27 dicembre 2026 alle 10:00 Michele Pio riceverà il Santo Battesimo nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia), e dopo la cerimonia festeggeremo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Per noi sarebbe davvero speciale averti accanto in questo giorno: facci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
+var TXT='Abbiamo una bella notizia da condividere con te! Domenica 27 dicembre 2026 alle 10:00 Michele Pio riceverà il Santo Battesimo nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia), e dopo la cerimonia religiosa festeggeremo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Per noi sarebbe davvero speciale averti accanto in questo giorno: facci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function nome(n){return String(n).replace(/^Zi[oa] /,'')}
 function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
@@ -94,7 +94,7 @@ function salvaFam(dati,cb){
   }).catch(function(){cb({ok:false})});
 }
 var INFO='<div class="card info"><h2>Il giorno</h2><p><b><span class="nw">Domenica 27 dicembre 2026</span>, <span class="nw">ore 10:00</span></b></p><p><b>Cerimonia</b><br>Parrocchia Santissima Trinità<br>Via Dante Alighieri, Manfredonia<br><a href="https://waze.com/ul?q='+encodeURIComponent('Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia')+'&navigate=yes">Waze</a> &nbsp;·&nbsp; <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Parrocchia Santissima Trinità, Via Dante Alighieri, Manfredonia')+'">Maps</a></p><p><b>Pranzo</b><br>Manfredi Ricevimenti<br>S.P. 58, km 12, Manfredonia<br><a href="https://waze.com/ul?q='+encodeURIComponent('Manfredi Ricevimenti, Manfredonia')+'&navigate=yes">Waze</a> &nbsp;·&nbsp; <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Manfredi Ricevimenti, Manfredonia')+'">Maps</a></p></div>';
-function shell(inner,small){app.innerHTML='<img class="inv'+(small?' small':'')+'" src="invito.jpg" alt="Invito al battesimo di Michele Pio" role="button" tabindex="0"><span class="hint">Tocca l\'invito per vederlo grande</span>'+inner}
+function shell(inner,small){app.innerHTML='<img class="inv'+(small?' small':'')+'" src="invito.jpg?v=2" alt="Invito al battesimo di Michele Pio" role="button" tabindex="0"><span class="hint">Tocca l\'invito per vederlo grande</span>'+inner}
 function stLab(s,eta){return s==='si'?'Ci sarà':s==='no'?'Non ci sarà':'Non ha ancora risposto'}
 function byId(id){for(var i=0;i<D.membri.length;i++)if(D.membri[i].id===id)return D.membri[i];return null}
 
@@ -178,7 +178,7 @@ function riepilogo(appena){
 }
 /* ---- invito a schermo intero, con zoom ---- */
 var Z=document.createElement('div');Z.id='zoom';Z.setAttribute('role','dialog');Z.setAttribute('aria-label','Invito a schermo intero');
-Z.innerHTML='<button class="x" type="button">Chiudi ✕</button><img src="invito.jpg" alt="Invito al battesimo di Michele Pio"><p class="tip">Allarga con due dita per ingrandire</p>';
+Z.innerHTML='<button class="x" type="button">Chiudi ✕</button><img src="invito.jpg?v=2" alt="Invito al battesimo di Michele Pio"><p class="tip">Allarga con due dita per ingrandire</p>';
 document.body.appendChild(Z);
 var zi=Z.querySelector('img'),zs=1,zx=0,zy=0,w0=0,h0=0,pts={},g0=null,lastTap=0;
 function fit(){var vw=innerWidth,vh=innerHeight,r=Math.min(vw/720,vh/1280);w0=720*r;h0=1280*r;zi.style.width=w0+'px';zi.style.height=h0+'px';zi.style.left='0';zi.style.top='0';zi.style.maxWidth='none';zi.style.maxHeight='none'}
