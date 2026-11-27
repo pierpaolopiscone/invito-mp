@@ -58,7 +58,7 @@ var E={codice:'entry.407281430',da:'entry.2050955296',dati:'entry.1296441758'};
 var P=new URLSearchParams(location.search),C=P.get('c'),F=P.get('f'),T=P.get('t')==='1';
 var app=document.getElementById('app');
 var D=null,me=null,draft={};
-var TXT='Ciao! Domenica 27 dicembre 2026 alle 10:00 battezziamo Michele Pio nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia). Dopo la cerimonia festeggiamo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Ci farebbe tanto piacere avervi con noi: fateci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
+var TXT='Abbiamo una bella notizia da condividere con te 🤍 Domenica 27 dicembre 2026 alle 10:00 Michele Pio riceverà il Battesimo nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia), e dopo la cerimonia festeggeremo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Per noi sarebbe davvero speciale averti accanto in questo giorno: facci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function nome(n){return String(n).replace(/^Zi[oa] /,'')}
 function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
