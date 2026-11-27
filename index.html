@@ -9,6 +9,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Nunito Sans",
 .inv{display:block;width:100%;border-radius:18px;box-shadow:0 18px 38px -18px rgba(60,40,20,.5),0 0 0 1px var(--line);background:#fff}
 .inv.small{width:62%;margin:0 auto}
 h1,h2,p,label,.btn{text-wrap:pretty}
+.vai{white-space:nowrap;position:fixed;left:50%;transform:translateX(-50%);bottom:max(18px,env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border:0;border-radius:999px;background:var(--euc);color:#fff;font:700 16px "Nunito Sans",sans-serif;box-shadow:0 8px 24px rgba(40,60,50,.3);cursor:pointer;transition:opacity .25s}
+.vai.off{opacity:0;pointer-events:none}
+.vai .dot{width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.8);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.8)}70%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+@media(prefers-reduced-motion:reduce){.vai .dot{animation:none}}
+#conf{scroll-margin-top:16px}
 .nw{white-space:nowrap}
 .inv{cursor:zoom-in}
 .hint{display:block;text-align:center;font-size:13px;color:var(--soft);margin-top:8px}
@@ -58,7 +64,7 @@ var E={codice:'entry.407281430',da:'entry.2050955296',dati:'entry.1296441758'};
 var P=new URLSearchParams(location.search),C=P.get('c'),F=P.get('f'),T=P.get('t')==='1';
 var app=document.getElementById('app');
 var D=null,me=null,draft={};
-var TXT='Abbiamo una bella notizia da condividere con te 🤍 Domenica 27 dicembre 2026 alle 10:00 Michele Pio riceverà il Battesimo nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia), e dopo la cerimonia festeggeremo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Per noi sarebbe davvero speciale averti accanto in questo giorno: facci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
+var TXT='Abbiamo una bella notizia da condividere con te 💙 Domenica 27 dicembre 2026 alle 10:00 Michele Pio riceverà il Santo Battesimo nella Parrocchia Santissima Trinità (Via Dante Alighieri, Manfredonia), e dopo la cerimonia festeggeremo insieme da Manfredi Ricevimenti (S.P. 58, km 12, Manfredonia). Per noi sarebbe davvero speciale averti accanto in questo giorno: facci sapere entro il 13 dicembre. Un abbraccio, Pierpaolo e Mariassunta';
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function nome(n){return String(n).replace(/^Zi[oa] /,'')}
 function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
@@ -119,7 +125,10 @@ function start(){
   });
 }
 function chi(){
-  shell('<div class="card"><h2 class="center">Ciao!</h2><p class="lead">Vi aspettiamo al battesimo di</p><span class="nome">Michele Pio</span><p><b>Chi sei?</b> Tocca il tuo nome.</p><div class="who">'+D.membri.map(function(m){return '<button class="btn" data-id="'+esc(m.id)+'">'+esc(m.nome)+'</button>'}).join('')+'</div></div>'+INFO,true);
+  shell('<div class="card" id="conf"><h2 class="center">Conferma la tua presenza</h2><p class="lead">al battesimo di</p><span class="nome">Michele Pio</span><p class="center"><b>Chi sei?</b> Tocca il tuo nome</p><div class="who">'+D.membri.map(function(m){return '<button class="btn" data-id="'+esc(m.id)+'">'+esc(m.nome)+'</button>'}).join('')+'</div></div>'+INFO+'<button class="vai" id="vai" type="button"><span class="dot"></span>Conferma la tua presenza</button>');
+  var vai=document.getElementById('vai'),card=document.getElementById('conf');
+  vai.onclick=function(){card.scrollIntoView({behavior:'smooth',block:'start'})};
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){vai.classList.toggle('off',es[0].isIntersecting)},{threshold:.6}).observe(card);
   app.querySelectorAll('[data-id]').forEach(function(b){b.onclick=function(){me=b.getAttribute('data-id');store(KEY,me);var m=byId(me);if(m.stato==='attesa')domanda();else riepilogo()}});
 }
 function domanda(){
